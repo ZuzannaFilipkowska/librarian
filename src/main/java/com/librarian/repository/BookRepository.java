@@ -1,4 +1,12 @@
-//package com.librarian.repository;
+package com.librarian.repository;
+
+import com.librarian.model.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.util.UUID;
+
 //
-//public class BookRepository {
+//@Repository
+//public interface BookRepository extends JpaRepository<Book, UUID> {
+//    Book findBookById(UUID resId);
 //}
