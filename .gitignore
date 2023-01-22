@@ -32,15 +32,15 @@ build/
 ### VS Code ###
 .vscode/
 
-frontend/node_modules
-frontend/.pnp
-frontend/.pnp.js
+src/main/frontend/node_modules
+src/main/frontend/.pnp
+src/main/frontend/.pnp.js
 
 # testing
-frontend/coverage
+src/main/frontend/coverage
 
 # production
-frontend/build
+src/main/frontend/build
 
 # misc
 .DS_Store
