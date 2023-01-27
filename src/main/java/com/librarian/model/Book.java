@@ -22,6 +22,7 @@ public class Book {
     private UUID id = UUID.randomUUID();
     private String title;
     private String author;
+    private String status;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate reservationDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

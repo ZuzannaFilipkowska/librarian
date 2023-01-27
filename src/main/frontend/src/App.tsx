@@ -1,48 +1,36 @@
 import './App.css';
-import {useEffect, useState} from "react";
-import BookTable from "./components/BookTable";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import React from 'react';
 import {Registration} from "./components/Registration";
+import {LibraryProvider} from "./context/LibraryContext";
+import Header from "./components/Header";
+import Reservations from "./pages/Reservations";
+import Books from "./pages/Books";
+import HomePage from "./pages/HomePage";
+import AdminReservations from "./pages/AdminReservations";
+import AdminBorrowed from "./pages/AdminBorrowed";
 
 function App() {
-
-    const [books, setBooks] = useState([
-        { id: 1, name: 'George', animal: 'Monkey' },
-        { id: 2, name: 'Jeffrey', animal: 'Giraffe' },
-        { id: 3, name: 'Alice', animal: 'Giraffe' },
-        { id: 4, name: 'Alice', animal: 'Tiger' },
-    ]);
-    const bookTableColumns = [
-        {dataField: 'id', text: 'Id'},
-        {dataField: 'name', text: 'Title'},
-    ];
-
-  useEffect(() => {
-    fetch('/books').then(response => response.text())
-      .then(books => console.log(books))
-      .then(books => books != null ? setBooks(books) : console.log(books) );
-  } )
-
-
+  //  PLAN
+    // wyszukiwarka
+  // data rezerwacji check
   return (
-      <Router>
-          <div className="App">
-              <Routes>
-                  <Route path={"/register"} element={<Registration/>}/>
-
-                  <Route
-                      path="/books"
-                      element={
-                          <>
-                              <BookTable books={books} columns={bookTableColumns}></BookTable>
-                          </>
-                      }
-                  ></Route>
-                  <Route path="/table" element={<BookTable books={books} columns={bookTableColumns} />} />
-              </Routes>
-          </div>
-      </Router>
+      <LibraryProvider>
+          <Router>
+              <Header/>
+              <div className="container pb-3">
+                      <Routes>
+                          <Route path={"/register"} element={<Registration/>}/>
+                          <Route path={"/books"} element={<Books/>}/>
+                          <Route path={"/books/user"} element={<Reservations/>}/>
+                          <Route path={"/admin/reservations"} element={<AdminReservations/>}/>
+                          <Route path={"/admin/borrowings"} element={<AdminBorrowed/>}/>
+                          <Route path={"/"} element={<HomePage/>}/>
+                          <Route path={"*"} element={<>Not found!</>}/>
+                      </Routes>
+              </div>
+          </Router>
+      </LibraryProvider>
   );
 }
 

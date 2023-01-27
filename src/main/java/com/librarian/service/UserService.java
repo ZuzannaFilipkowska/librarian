@@ -2,15 +2,18 @@ package com.librarian.service;
 
 import com.librarian.exception.ExceptionInfo;
 import com.librarian.exception.UserWithGivenNameExists;
+import com.librarian.model.AuthenticatedUserDto;
 import com.librarian.model.NewUserDto;
 import com.librarian.model.User;
-import com.librarian.model.UserDto;
 import com.librarian.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -55,7 +58,15 @@ public class UserService {
         }
     }
 
+    public AuthenticatedUserDto getAuthority() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        final Boolean isAdmin = Objects.equals(currentPrincipalName, "librarian");
+        return new AuthenticatedUserDto(currentPrincipalName, isAdmin);
+    }
+
     private Boolean ifUserExists(String name) {
         return getUserByName(name) != null;
     }
+
 }

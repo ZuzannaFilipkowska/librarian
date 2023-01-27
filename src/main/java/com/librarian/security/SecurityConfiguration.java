@@ -6,6 +6,7 @@ import com.librarian.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
-@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
@@ -33,30 +34,6 @@ public class SecurityConfiguration {
         return authProvider;
     }
 
-//    @Bean
-//    public SecurityFilterChain configure(final HttpSecurity http) throws Exception {
-//        http.cors()
-//                .disable()
-//                .csrf()
-//                .disable()
-//                .authorizeHttpRequests()
-//                .requestMatchers("/", "/api/user/register", "/register", "/static/**.js", "/static/**.css", "/*.png", "/*.ico", "/*.json", "*.tsx", "*.ts", "/table").permitAll() // allow CORS option calls for Swagger UI
-////                .anyRequest()
-////                .authenticated()
-//                .and()
-//                .formLogin()
-//                .defaultSuccessUrl("/", true)
-//                .and()
-//                .logout()
-//                .logoutUrl("/perform_logout")
-//                .logoutSuccessUrl("/")
-//                .invalidateHttpSession(true)
-//                .deleteCookies("JSESSIONID")
-//                .permitAll();
-//
-//        return http.build();
-//    }
-
     @Bean
     public SecurityFilterChain configure(final HttpSecurity http) throws Exception {
         http.cors()
@@ -72,7 +49,7 @@ public class SecurityConfiguration {
                 .authenticated()
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/books", true)
                 .and()
                 .logout()
                 .logoutUrl("/perform_logout")
